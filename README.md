@@ -32,6 +32,7 @@ This section discuss about the technologies used in developing this project
 - **Flyway (DB Migration Tools)** : Facilitate the Database Initialization Process using Flyway Migrate , this allow developer to sync all DB changes and just focus on developing task.
 - **Maven**: Bundling Tools to build the project
 - **Swagger OpenAPI** : Frontend UI to help define, document, and visualize RESTful API. Primarily used for documentation and testing the functionality of the library system.
+- **Github Container Register** : Docker image is uploaded to github container registry so that everyone can download the App Image and run the docker-compose freely.
 
 ## Design Pattern
 - **DTO Pattern** : DTO help to abstract away heavy entity that used for database query. This reduce the size of the payload and help to simplify data transmission.
@@ -40,7 +41,7 @@ This section discuss about the technologies used in developing this project
 - **Service Layer** : Abstract away complex logic from controller. Improve code readability.
 - **Controller Layer** : Focus on return API through ResponseEntity with proper payload header status and body for information.
 - **RequestBody Validation** : Validation @Valid will ensure the POST message coming in cannot be null else will throw Exception Error.
-- **Immutate Record** : Records introduced in java 14 allows immutable objects and is best suited for DTO to reduce extra code getter/setter.
+- **Immutable Java Record** : Records introduced in java 14 allows immutable objects and is best suited for DTO to reduce extra code getter/setter.
 - **Java Stream API** : Utilized stream API to better go through the result list to reduce boilerplate code and improve readability and obtain immutability to avoid accidental changes.
 
 ## Database Decision
@@ -68,6 +69,26 @@ com.example.library
 ├── repo// JPA Data access
 └── service// Abstraction Layer for controller
 ```
+The file is arranged as above accordingly each to their own respective functions.
+
+## MockMVC Overview
+
+In this project , unit test is carried out on the controller functions to test the API endpoint and check the return repsonse.
+All Test is compiled insode ControllerTest.java
+
+Step to run the test
+1) Using IDE such as Intellij and build in UI , head over to the java class file and press the play button
+2) Results will be shown in the bottom tab , either success or fail
+
+Note : To run the unit test , it requires postgres database. Hence , please keep the docker-compose up to perform unit testing.
+Note : To run the test locally , require to manually type the database username and pass at the application.properties because it does not belong to and compose stack.
+![img_3.png](img_3.png)
+
+### Sucess Unit Test
+![img_1.png](img_1.png)
+
+The unit test written with mockmvc will show success if the assertion is correct.
+
 
 ## API Endpoints
 
@@ -106,10 +127,19 @@ Borrower API
 
 - Step 4 : Go to Swagger Location (Links at below to check out the APIs and play around without using Postman)
 
+![img_2.png](img_2.png)
+
+Once the docker-compose stack is up , you can see two services up and running. App and DB service.
+
 ## Swagger UI locations
 
 - Swagger UI: http://localhost:8080/swagger-ui.html
 - OpenAPI JSON: http://localhost:8080/v3/api-docs
+
+![img.png](img.png)
+
+Note : Swagger can test out the api , just need to fill in accordingly.
+
 
 ## Commands (Do not need to use if not needed)
 
@@ -121,6 +151,10 @@ Borrower API
 
 `DROP SCHEMA public CASCADE;`
 `CREATE SCHEMA public;`
+
+- maven clean install , skip the test
+
+`mvn clean install -Dmaven.test.skip=true`
 
 
 ## Docker Command To Push Image (Do not need to use if not needed)
@@ -159,4 +193,4 @@ Borrower API
 [MIT License](LICENSE)
 
 ## Contributing
-Contributions are welcome! Please feel free to submit a Pull Request. ;) 
+Contributions are always welcome! Please feel free to submit a pull request for any changes related! :)
